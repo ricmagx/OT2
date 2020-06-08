@@ -101,9 +101,9 @@ def run(ctx):
     """
     binding_buffer = res1.wells()[:6]
     elution_solution = res1.wells()[-1]
-    wash3 = res2.wells()[:4]
-    wash4 = res2.wells()[4:8]
-    wash5 = res2.wells()[8:]
+    wash1 = res2.wells()[:4]
+    wash2 = res2.wells()[4:8]
+    wash3 = res2.wells()[8:]
 
     mag_samples_m = magplate.rows()[0][:num_cols]
     elution_samples_m = flatplate.rows()[0][:num_cols]
@@ -400,9 +400,9 @@ for 2 minutes')
 """
 Here is where you can call the methods defined above to fit your specific
 protocol. The normal sequence is:
-- bind()
-- wash()
-- wash()
-- wash()
-- elute()
+- bind(200)
+- wash(500, wash1)
+- wash(500, wash2)
+- wash(500, wash3)
+- elute(50)
 """
