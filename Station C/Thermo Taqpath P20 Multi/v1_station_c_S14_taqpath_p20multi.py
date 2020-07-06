@@ -33,7 +33,7 @@ def run(ctx: protocol_api.ProtocolContext):
     pcr_plate = tempdeck.load_labware(
         'opentrons_96_aluminumblock_nest_wellplate_100ul', 'PCR plate')
     mm_strips = ctx.load_labware(
-        'opentrons_96_aluminumblock_generic_pcr_strip_200ul', '7',
+        'opentrons_96_aluminumblock_nest_wellplate_100ul', '7',
         'mastermix strips')
     tempdeck.set_temperature(4)
     tube_block = ctx.load_labware(
