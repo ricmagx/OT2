@@ -11,7 +11,7 @@ metadata = {
     'apiLevel': '2.0'
 }
 
-NUM_SAMPLES = 8
+NUM_SAMPLES = 96
 SAMPLE_VOLUME = 100
 TIP_TRACK = False
 
@@ -91,18 +91,18 @@ resuming.')
         pip.pick_up_tip(tip_log['tips'][pip][tip_log['count'][pip]])
         tip_log['count'][pip] += 1
 
-    heights = {tube: 20 for tube in binding_buffer}
-    radius = (binding_buffer[0].diameter)/2
-    min_h = 5
-
-    def h_track(vol, tube):
-        nonlocal heights
-        dh = vol/(math.pi*(radius**2))
-        if heights[tube] - dh > min_h:
-            heights[tube] = heights[tube] - dh
-        else:
-            heights[tube] = min_h  # stop 5mm short of the bottom
-        return heights[tube]
+    #heights = {tube: 20 for tube in binding_buffer}
+   # radius = (binding_buffer[0].diameter)/2
+   # min_h = 5
+#
+   # def h_track(vol, tube):
+   #     nonlocal heights
+   #     dh = vol/(math.pi*(radius**2))
+  #      if heights[tube] - dh > min_h:
+   #         heights[tube] = heights[tube] - dh
+   #     else:
+   #         heights[tube] = min_h  # stop 5mm short of the bottom
+   #     return heights[tube]
 
     # transfer sample
     for s, d in zip(sources, dests_single):
