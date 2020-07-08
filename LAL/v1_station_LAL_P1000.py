@@ -11,7 +11,7 @@ metadata = {
     'apiLevel': '2.0'
 }
 
-NUM_SAMPLES = 96
+NUM_SAMPLES = 10
 SAMPLE_VOLUME = 100
 TIP_TRACK = False
 
@@ -26,10 +26,10 @@ def run(ctx: protocol_api.ProtocolContext):
         ctx.load_labware(
             'opentrons_15_tuberack_falcon_15ml_conical', slot,
             'source tuberack ' + str(i+1))
-        for i, slot in enumerate(['11', '10', '6', '5', '4', '3'])
+        for i, slot in enumerate(['11', '10', '7', '4', '5', '6', '3'])
     ]
     dest_plate = ctx.load_labware(
-        'nest_96_wellplate_200ul_flat', '8', '96-wellplate sample plate')
+        'nest_96_wellplate_200ul_flat', '9', '96-wellplate sample plate')
     #binding_buffer = ctx.load_labware(
     #   'opentrons_6_tuberack_falcon_50ml_conical', '7',
     #  '50ml tuberack for binding buffer (tubes A1+B1)').wells()[:1]
@@ -38,7 +38,7 @@ def run(ctx: protocol_api.ProtocolContext):
     #     '50ml tuberack for lysis buffer + PK (tube A1)').wells()[:1]
     tipracks1000 = [ctx.load_labware('opentrons_96_filtertiprack_1000ul', slot,
                                      '1000µl filter tiprack')
-                    for slot in ['9']]
+                    for slot in ['8']]
    # tipracks20 = [ctx.load_labware('opentrons_96_filtertiprack_20ul', '10',
    #                                '20µl filter tiprack')]
 
@@ -107,13 +107,16 @@ resuming.')
     # transfer sample
     for s, d in zip(sources, dests_single):
         pick_up(p1000)
+        for _ in range(2):
+            p1000.aspirate (500, s.bottom(5))
+            p1000.dispense (500, s.bottom(5))
         p1000.transfer(SAMPLE_VOLUME, s.bottom(5), d.bottom(5), air_gap=100,
                        new_tip='never')
         p1000.air_gap(100)
         p1000.drop_tip()
 
     # transfer binding buffer and mix
-    #for i, (s, d) in enumerate(zip(sources, dests_single)):
+    #for i, (s, d) in enumerate(zip1,sources, dests_single)):
     #    pick_up(p1000)
     #    source = binding_buffer[i//96]  # 1 tube of binding buffer can accommodate all samples here
     #    h = h_track(275, source)
