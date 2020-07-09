@@ -82,11 +82,8 @@ resuming.')
     # transfer sample
     for s, d in zip(sources, dests_single):
         pick_up(p300)
-        for _ in range(1):
-            p300.aspirate (200, s.bottom(5))
-            p300.dispense (200, s.bottom(5))
         p300.transfer(SAMPLE_VOLUME, s.bottom(5), d.bottom(5), air_gap=20,
-                       new_tip='never')
+                      mix_before=(2, 200), new_tip='never')
         p300.air_gap(20)
         p300.drop_tip()
 
