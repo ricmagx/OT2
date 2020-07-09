@@ -35,14 +35,12 @@ def run(ctx: protocol_api.ProtocolContext):
     # load pipette
 
     p300 = ctx.load_instrument('p300_single_gen2', 'left', tip_racks=tips300)
-
+    p300.flow_rate.dispense = 100
 
     # setup samples
     sources = [
         well for rack in source_racks for well in rack.wells()][:NUM_SAMPLES]
     dests_single = dest_plate.wells()[:NUM_SAMPLES]
-    num_cols = math.ceil(NUM_SAMPLES/8)
-    dests_multi = dest_plate.rows()[0][:num_cols]
 
     tip_log = {'count': {}}
     folder_path = '/data/A'
@@ -77,12 +75,14 @@ resuming.')
         pip.pick_up_tip(tip_log['tips'][pip][tip_log['count'][pip]])
         tip_log['count'][pip] += 1
 
-
+    # transfer two controls
+    # **Incluir o labware (suporte de eppendorf)
+    # definir local branco
+    # if TRUE reta de calibração
 
     # transfer sample
     for s, d in zip(sources, dests_single):
         pick_up(p300)
-        p300.flow_rate.dispense = 100
         p300.transfer(SAMPLE_VOLUME, s.bottom(5), d.bottom(5), air_gap=20,
                       mix_before=(2, 200), new_tip='never')
         p300.air_gap(20)
